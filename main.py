@@ -1,28 +1,16 @@
-import os
-from github import Auth
-from github import Github
-api_token: str = os.getenv('GIT_TOKEN')
+import src
 
 
 def app():
-    auth = Auth.Token(api_token)
-    g = Github(auth=auth)
-    user = g.get_user()
-    print(f"пользователь: {user.name}")
-    repos = user.get_repos()
-    repos_name_list = []
-    print(f"\nСписок репозиториев получен:")
-    for rep in repos:
-        repos_name_list.append(rep.name)
-        print(rep.name)
-    if "test_repo" in repos_name_list:
-        print("\nВ списке выше уже присутствует репозиторий с именем - test_repo")
-        repo = user.get_repo("test_repo")
-        repo.delete()
-        print("\nПроизведено удаление репозитория - test_repo")
+    user = src.auth(src)
+    repos_name_list = src.get_repos_list(user)
+    bool_check = src.check_repo_in_list(user, repos_name_list)
+
+    if bool_check:
+        src.create_repo(user, src)
     else:
-        repo = user.create_repo("test_repo")
-        print(f"\nПроизведено Создание репозитория - {repo.name}")
+        src.repo_delete(user, src)
+
 
 if __name__ == "__main__":
     app()
