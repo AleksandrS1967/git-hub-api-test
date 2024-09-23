@@ -13,4 +13,4 @@ repo_name = "test_repo"
 Auth = Auth
 git = Github
 github = github
-api_token: str = 'sdf78g69sdf8g987'
+api_token: str = os.getenv('GIT_TOKEN')
