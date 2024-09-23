@@ -1,7 +1,6 @@
 import os
 from github import Auth
 from github import Github
-
 import github
 from src.auth import auth
 from src.get_repos_list import get_repos_list
